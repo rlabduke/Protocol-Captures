@@ -69,7 +69,7 @@ Cmdlist is supplied for examples fo these commands.  I think you could just run 
 ====Geocorrelating IP addresses====
 I Googled until I found https://ipinfo.io/.  It has a sample script that suggests:
 
-curl ipinfo.io/99.57.71.82:
+curl ipinfo.io/99.57.71.82:
 
 15:13:11 somarriba ~/TERABYTE/rlab/mplogs/2014_both_didwork> curl ipinfo.io/99.57.71.82
 {
