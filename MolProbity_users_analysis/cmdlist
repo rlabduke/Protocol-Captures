@@ -1,0 +1,53 @@
+# awk -F: '{print $1}' molprobity.log | sort | uniq > mplog.ips
+# awk -F: '{print $1}' user_paths.log | sort | uniq > user_paths.ips
+# wc -l *ips
+# cat *ips | sort | uniq | wc -l
+# awk -F: '{print $2}' user_paths.log | sort | uniq > user_paths.jids
+# awk -F: '{print $2}' molprobity.log | sort | uniq > mplog.jids
+# wc -l *jids
+# cat *jids | sort | uniq | wc -l
+
+# awk -F: '$3<1325394000' molprobity.log | grep -e '^$' -v > molprobity.log.2011
+# awk -F: '$3>1325394000' molprobity.log | awk -F: '$3<1357016400' | grep -e '^$' -v > molprobity.log.2012
+# awk -F: '$3>1357016400' molprobity.log | awk -F: '$3<1388552400' | grep -e '^$' -v > molprobity.log.2013
+# awk -F: '$3>1388552400' molprobity.log | grep -e '^$' -v > molprobity.log.2014
+
+# awk -F: '$3<1325394000' user_paths.log | grep -e '^$' -v > user_paths.log.2011
+# awk -F: '$3>1325394000' user_paths.log | awk -F: '$3<1357016400' | grep -e '^$' -v > user_paths.log.2012
+# awk -F: '$3>1357016400' user_paths.log | awk -F: '$3<1388552400' | grep -e '^$' -v > user_paths.log.2013
+# awk -F: '$3>1388552400' user_paths.log | grep -e '^$' -v > user_paths.log.2014
+
+# awk -F: '$3>1387386000' user_paths.log | awk -F: '$3<1417712400' | grep -e '^$' -v > user_paths.log.50wks2014
+# awk -F: '$3>1387386000' molprobity.log | awk -F: '$3<1417712400' | grep -e '^$' -v > molprobity.log.50wks2014
+
+# 2014 start:
+# 1388552400
+
+# 2015 start:
+# 1420088400
+
+
+#####I think you can just run this as a script, but I suggest cutting and pasting instead!!
+
+awk -F: '$3>1357016400' molprobity.log | awk -F: '$3<1388552400' | grep -e '^$' -v > molprobity.log.2013
+awk -F: '$3>1388552400' molprobity.log | awk -F: '$3<1420088400' | grep -e '^$' -v > molprobity.log.2014
+awk -F: '$3>1420088400' molprobity.log | grep -e '^$' -v > molprobity.log.2015
+
+awk -F: '$3>1357016400' user_paths.log | awk -F: '$3<1388552400' | grep -e '^$' -v > user_paths.log.2013
+awk -F: '$3>1388552400' user_paths.log | awk -F: '$3<1420088400' | grep -e '^$' -v > user_paths.log.2014
+awk -F: '$3>1420088400' user_paths.log | grep -e '^$' -v > user_paths.log.2015
+
+foreach logfile ( molprobity.log molprobity.log.2* user_paths.log user_paths.log.2*)
+
+awk -F: '{print $1}' $logfile | sort | uniq > $logfile.ips
+grep "pdb-fetch" $logfile > $logfile.fetches
+grep "pdb-upload" $logfile > $logfile.uploads
+
+end
+
+cat *.2015.*ips | sort | uniq | wc -l > IPs_2015
+cat *.2014.*ips | sort | uniq | wc -l > IPs_2014
+cat *.2013.*ips | sort | uniq | wc -l > IPs_2013
+cat *.2012.*ips | sort | uniq | wc -l > IPs_2012
+cat *.2011.*ips | sort | uniq | wc -l > IPs_2011
+
