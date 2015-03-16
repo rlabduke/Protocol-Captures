@@ -26,7 +26,7 @@ For the current (Feb 2015) hardware, the MolProbity server should sit at 23% dis
 2) random huge PDBs (???) (see next section)
 
 ==/private/var/tmp==
-There is a directory on the current server /private/var/tmp.  It seems to have fragments of user-uploaded PDBs.  Occasionally something goes wrong and it will have truly enormous files – once it had a 600 GB PDB on the 1 TB disk.  Just dump out crap from here as needed, I've only been sniping out individual huge files.  I assume these are from network errors during file upload.
+There is a directory on the current server /private/var/tmp.  It seems to have fragments of user-uploaded PDBs.  Occasionally something goes wrong and it will have truly enormous files – once it had a 600 GB PDB on the 1 TB disk.  Just dump out crap from here as needed, I've only been sniping out individual huge files.  These appear to be related to crashed reduce jobs.
 
 ====Stuck jobs====
 
@@ -61,3 +61,16 @@ sudo kill [PID]
 You need root access, obviously.  
 
 Killing stuck jobs will free up a processor (there are 8 on MolProbity) and occasionally free up stuck disk space.
+
+== Jobs that are likely to be stuck ==
+Look for: 
+php -f /Library/WebServer/Documents/moltbx/jobs/aacgeom.php [molprobity job id]
+php -f /Library/WebServer/Documents/moltbx/jobs/addmodel.php [molprobity job id]
+/Library/WebServer/Documents/moltbx/build/reduce/exe/reduce -DB /Library/WebServer/Documents/moltbx/sources/reduce/reduce_wwPDB_het_dict.txt -ALLALT -quiet -trim -allalt /private/var/tmp/tmp_pdb_[some hash]
+
+== molprobity job id ==
+examples:
+tu5edi63hrl47b3t32hckr4n2ghl1rvp
+48gbfpvo5jei7k6ecp23ke6a9bq73tci
+
+a-z lowercase, 0-9, 32 chars.  The identity is not significant.  The jobs themselves are in /Library/WebServer/Documents/moltbx/public_html/data, if you want to look at what was going on, or save them for debugging.
