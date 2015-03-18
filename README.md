@@ -8,7 +8,7 @@ Molprobity
 
 ### MolProbity_maintenance_miscellanea: 
 
-* How to maintain the server's function in terms of disk and processor use;  
+* How to maintain the server's function in terms of disk and processor use 
 
 * Where to go to reclaim lost disk space 
 
@@ -16,6 +16,6 @@ Molprobity
 
 ### MolProbity_users_analysis
 
-* how Steven performed analysis for the 2015 Feb grant renewal
+* How Steven performed analysis for the 2015 Feb grant renewal
 
  
