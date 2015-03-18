@@ -6,7 +6,7 @@ Contents (sort by function):
 Molprobity
 ----------
 
-MolProbity_maintenance_miscellanea: 
+### MolProbity_maintenance_miscellanea: 
 
 (i) How to maintain the server's function in terms of disk and processor use;  
 
@@ -14,6 +14,8 @@ MolProbity_maintenance_miscellanea:
 
 (iii) how to kill bad jobs MolProbity_users_analysis 
 
-(iv) how Steven performed analysis for the 2015 Feb grant renewal
+### MolProbity_users_analysis
+
+how Steven performed analysis for the 2015 Feb grant renewal
 
  
