@@ -19,3 +19,6 @@ Molprobity
 * How Steven performed analysis for the 2015 Feb grant renewal
 
  
+### MolProbity_install
+
+* How to install and keep MolProbity sources up to date 
