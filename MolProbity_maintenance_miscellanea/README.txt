@@ -74,3 +74,6 @@ tu5edi63hrl47b3t32hckr4n2ghl1rvp
 48gbfpvo5jei7k6ecp23ke6a9bq73tci
 
 a-z lowercase, 0-9, 32 chars.  The identity is not significant.  The jobs themselves are in /Library/WebServer/Documents/moltbx/public_html/data, if you want to look at what was going on, or save them for debugging.
+
+== one line process watcher ==
+watch "ps -aux|grep ^www-data| grep -v apache; df -h | grep home"
