@@ -30,7 +30,7 @@ There is a directory on the current server /private/var/tmp.  It seems to have f
 
 ====Stuck jobs====
 
-There are a handful of places that MolProbity will hang – jobs will just sit at 100% processor doing nothing.  Usually either aac_geom.py or the upload script (name?) hang.  Don't ask me why.  Sometimes Reduce hangs too.
+There are a handful of places that MolProbity will hang – jobs will just sit at 100% processor doing nothing.  Usually either aac_geom.php or the upload script addmodel.php hang.  Hangs in php scripts seem to really be the death of child processes that aren't properly communicated to the php parent process.  Sometimes Reduce hangs too.
 
 If a job is running more than an hour, it's probably hung, and can be killed.  Find the job with:
 
