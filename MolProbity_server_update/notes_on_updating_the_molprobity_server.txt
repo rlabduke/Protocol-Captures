@@ -1,0 +1,74 @@
+beta server is altmolprobity on muscle
+main MolProbity is on mental
+
+ssh to mental or muscle as rlab
+
+MolProbities holds all versions of MP
+MolProbity simlinks to the current version
+
+NEW_SERVER_INSTRUCTIONS records the commands to stop apache, update the simlink, then restart apache for major version changes
+
+
+example:
+4.2 is the scientifically complete version of 4.2, what we share with people who want to set up their own servers
+4.2live is the version we actually serve, where changes to banners and announcements can change and be logged.
+
+-----------------------
+
+close everything
+
+git branch molprobity_versionnumber
+git branch molprobity_versionnumber_live
+
+*versionnumber is the reference version
+*live is the version actually served - changes to banners and such go here
+
+remember to push --set-upstream origin the new branches so that GitHub knows about them
+
+this is set up so that we cherrypick changes, which should deter us from making changes without reversioning
+--
+
+ssh mental
+cd Desktop/Molprobities
+this contains all versions of MP, including a simlink that is what the server serves
+git clone the repository
+checkout the live branch so that we serve the thing we mean to
+
+run configure
+if configure doesn't work, probably just nuke the dir and start over
+run setup (may not be necessary)
+
+run tests
+diff test results on new and old versions
+
+cat NEW_SERVER_INSTRUCTIONS
+do what they say
+short version:
+stop apache
+redo the simlinks
+restart apache
+
+clean out old temp data
+from data/tmp, rm tmp_*
+from data, rm -r *9* (try a few different numbers and it should clean everything but tmp)
+
+copy config.php from previous server (this is not tracked by git because it contains email information for bug reports)
+
+------
+
+notes on cherrypicking
+
+cherrypicking takes the changes from a particular commit and records them as a new commit somewhere else.
+
+Make a change in master
+cherrypick to MolProbity#
+merge MolProbity# to MolProbity#Live
+push everything
+git pull on the live server
+
+google how to cherrypick a commit
+
+git cherrypick longcommitidentity -e
+(-e will let us edit the commit message, -m and a new message also fine)
+
+
