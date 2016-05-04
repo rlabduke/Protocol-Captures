@@ -1,21 +1,19 @@
 beta server is altmolprobity on muscle
 main MolProbity is on mental
 
-ssh to mental or muscle as rlab
+ssh to mental or muscle as rlab (or use "su rlab" while there)
 
-MolProbities holds all versions of MP
-MolProbity simlinks to the current version
+~rlab/Desktop/MolProbities holds all versions of MP that have been installed
+MolProbity symlinks to the current version
 
-NEW_SERVER_INSTRUCTIONS records the commands to stop apache, update the simlink, then restart apache for major version changes
+NEW_SERVER_INSTRUCTIONS records the commands to stop apache, update the symlink, then restart apache for major version changes
 
 
 example:
-4.2 is the scientifically complete version of 4.2, what we share with people who want to set up their own servers
-4.2live is the version we actually serve, where changes to banners and announcements can change and be logged.
+molprobity_4.2 is the scientifically complete version of 4.2, what we share with people who want to set up their own servers
+molprobity_4.2_live is the version we actually serve, where changes to banners and announcements can change and be logged.
 
 -----------------------
-
-close everything
 
 git branch molprobity_versionnumber
 git branch molprobity_versionnumber_live
@@ -23,14 +21,14 @@ git branch molprobity_versionnumber_live
 *versionnumber is the reference version
 *live is the version actually served - changes to banners and such go here
 
-remember to push --set-upstream origin the new branches so that GitHub knows about them
+remember to push --set-upstream origin the new branches so that GitHub knows about them (git will give you this command when your first attempt to git push a new branch fails)
 
-this is set up so that we cherrypick changes, which should deter us from making changes without reversioning
+this is set up so that we cherry-pick changes, which should deter us from making changes without reversioning, and so that we don't merge to 4.2 from master
 --
 
-ssh mental
+ssh rlab@mental
 cd Desktop/Molprobities
-this contains all versions of MP, including a simlink that is what the server serves
+this contains all versions of MP, including a symlink that is what the server serves
 git clone the repository
 checkout the live branch so that we serve the thing we mean to
 
@@ -70,5 +68,3 @@ google how to cherrypick a commit
 
 git cherrypick longcommitidentity -e
 (-e will let us edit the commit message, -m and a new message also fine)
-
-
