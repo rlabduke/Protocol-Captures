@@ -24,6 +24,10 @@ git branch molprobity_versionnumber_live
 remember to push --set-upstream origin the new branches so that GitHub knows about them (git will give you this command when your first attempt to git push a new branch fails)
 
 this is set up so that we cherry-pick changes, which should deter us from making changes without reversioning, and so that we don't merge to 4.2 from master
+
+Update the Internal reference version number in lib/core.php
+around line 15
+define("MP_VERSION", "4.3");
 --
 
 ssh rlab@mental
