@@ -72,3 +72,14 @@ google how to cherrypick a commit
 
 git cherrypick longcommitidentity -e
 (-e will let us edit the commit message, -m and a new message also fine)
+
+
+------
+Notes on using an exact CCTBX version for molprobity install
+
+Notice how the 4.2_refresh on mental has customized configure scripts, config_prebuild and config_postbuild (/home/rlab/Desktop/MolProbities/MolProbity150915_42refresh). 
+This is the regular configure script, cut in half between the "download all the things" step and the "build cctbx and other things" step. 
+This allowed two things: one, I manually inserted the build command that cctbx would use, except with a -j of only 1 instead of 12 (to prevent the build from overloading the server). 
+Two, I went into the cctbx sources directory (sources/cctbx_project/) and reset the cctbx version to an exact version that matches an PHENIX major release (1.10). 
+This is probably "svn up -r 22859", where the number is an SVN revision. 
+So, run config_prebuild to get sources, manually intervene to get the exact sources you want, then run config_postbuild to actually do the buiilding.
