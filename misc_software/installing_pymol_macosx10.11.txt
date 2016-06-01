@@ -1,0 +1,83 @@
+Installing Pymol for Mac OSX 10.11
+
+This is a guide to installing pymol from its freely-available source code
+
+Dependencies: xcode developer tools
+-------
+Pymol has several dependencies that are included in the xcode developer tools.
+You will also need the dev tools to install Fink.
+
+Install xcode developer tools
+COMMAND: xcode-select --install
+(You may already have these.  This command is still safe in that case.)
+You may also need to run
+COMMAND: sudo xcodebuild -license
+-------
+
+Dependencies: Fink
+-------
+Pymol needs a Fink version of python and the pmw dependency is easily acquired through Fink.
+
+Follow the directions at http://www.finkproject.org/download/srcdist.php
+or
+see separate installing_fink_macosx10.11 document for details
+
+Source the Fink environment
+COMMAND: fink install python
+COMMAND: fink install pmw
+
+If Fink cannot find these packages, run
+COMMAND: fink selfupdate-rsync
+COMMAND: fink index -f
+to update where Fink looks for packages
+-------
+
+
+Dependencies: glew
+-------
+Go to https://sourceforge.net/projects/glew/?source=typ_redirect
+Download source code for glew
+Unzip/untar the download
+Navigate to the glew download directory
+
+glew will try to install to a location (/usr) used by previous version of the Mac OS, but which is not used for installs in the current version.  You need to edit the makefile to reflect Mac's new preferred install location (/usr/local).
+
+Open the makefile in your preferred editor.
+Find these lines near the beginning of the file:
+GLEW_PREFIX ?= /usr
+GLEW_DEST ?= /usr
+
+Change these lines to:
+GLEW_PREFIX ?= /usr/local
+GLEW_DEST ?= /usr/local
+
+Save your changes.  Now you can install glew.
+
+COMMAND: make
+COMMAND: sudo -s
+COMMAND: make install
+COMMAND: make clean
+
+(The make install command will fail if the makefile has not been changed to target /usr/local)
+-------
+
+
+Installing pymol
+-------
+Go to https://sourceforge.net/projects/pymol/
+Download source code for pymol
+Unzip/untar the download
+Navigate to the pymol download directory
+
+COMMAND: /sw/bin/python2.7 setup.py build install --home=~
+(pymol will be installed to ~/bin with this command. If you want it in another_directory/bin, use --home=another_directory)
+(/sw/bin/python2.7 is the python associated with Fink. Adjust this path if you didn't put Fink in /sw)
+
+Marvel at how easy that was relative to setting up the dependencies.
+-------
+
+
+Launching pymol
+-------
+COMMAND: ~/bin/pymol
+-------

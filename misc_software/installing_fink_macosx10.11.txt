@@ -1,0 +1,63 @@
+Installing Fink for Mac OSX 10.11
+
+These instructions are derived from http://www.finkproject.org/download/srcdist.php as of late May 2016.
+
+Should you install Fink?
+-------
+You probably have a version of Fink already.  If you have a /sw directory, you have a Fink.  Look in /sw/fink to check for version numbers.  If you don't have a 10.11 in there, you probably want to update.
+
+(Older versions of Fink look for older versions of perl on your machine.  If Fink can't find a version of perl it likes, it's not going to work.)
+
+You probably should install a new version of Fink.
+-------
+
+
+Prepare your machine
+-------
+Install xcode developer tools
+COMMAND: xcode-select --install
+(You may already have these.  This command is still safe in that case.)
+You may also need to run
+COMMAND: sudo xcodebuild -license
+
+Move or remove old version of Fink
+COMMAND: mv /sw /sw_old
+-------
+
+
+Download Fink source
+-------
+Go to http://www.finkproject.org/download/srcdist.php
+Download source code for your OS
+Unzip/untar the download
+-------
+
+
+Installing Fink
+-------
+Navigate to the Fink source code directory.
+COMMAND: ./bootstrap
+This command will install Fink to /sw
+
+Fink will ask you a bunch of questions during the install.  The defaults seems to be fine, so you can just hit return each time to accept the defaults.
+
+To source the Fink environment,
+COMMAND: . /sw/bin/init.sh
+
+If you want the Fink env sourced automatically when you open a terminal:
+COMMAND: /sw/bin/pathsetup.sh
+This will update your .bashprofile or similar
+
+You will also need to update Fink.
+-------
+
+
+Update Fink
+-------
+Ensure the Fink environment is sourced.
+COMMAND: fink selfupdate-rsync
+COMMAND: fink index -f
+
+These commands must be run even after an install of the current source code.
+If Fink is unable to find a package that you know should exist, run this update to make sure that Fink is looking in the right places to find the package.
+-------
