@@ -2,3 +2,6 @@
 \contentsline {section}{\numberline {2}Contents of the PDB MongdDB}{2}
 \contentsline {section}{\numberline {3}Using the MongoDB shell}{3}
 \contentsline {subsection}{\numberline {3.1}Queries in the Shell Environment}{5}
+\contentsline {section}{\numberline {4}Interacting with MongoDB with Python}{7}
+\contentsline {subsection}{\numberline {4.1}Installing pymongo}{7}
+\contentsline {subsection}{\numberline {4.2}Connecting To MongoDB on daneel}{7}

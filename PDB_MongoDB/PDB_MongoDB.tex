@@ -1,5 +1,17 @@
 \documentclass[12pt]{article}
 \usepackage[usenames, dvipsnames]{xcolor}
+\usepackage{listings}
+
+\lstset{ %
+  backgroundcolor=\color{gray},   % choose the background color
+  basicstyle=\footnotesize,        % size of fonts used for the code
+  breaklines=true,                 % automatic line breaking only at whitespace
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{PineGreen},    % comment style
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  keywordstyle=\color{blue},       % keyword style
+  stringstyle=\color{BrickRed},     % string literal style
+}
 
 \newcommand{\cmdline}[1]{\vspace{5mm} \noindent
 \texttt{\$ #1}
@@ -167,7 +179,8 @@ Again, the different options for querying within MongoDB is beyond the scope of 
 The query to find documents where "Solution NMR" is not the "experimental\_method" looks like \texttt{\{"experimental\_method":\{\$ne:"X-ray diffraction"\}\}}. \$ne stands for 'not equal'.
 This query document is placed within the parens of \texttt{findOne} or \texttt{find}.
 
-\mdbcmdline{db.experiment.findOne(\{"experimental\_method":\{\$ne:"X-ray diffraction"\}\})}
+\mdbcmdline{db.experiment.findOne(\\
+\{"experimental\_method":\{\$ne:"X-ray diffraction"\}\})}
 \noindent
 Here we have given \texttt{findOne} one argument -- the query. 
 \texttt{findOne} actually takes two optional arguments, the second is a JSON document that tells the program what records to return.
@@ -187,4 +200,63 @@ You can supress this by issuing:
 \{"experimental\_method":1,"\_id":0\})
 }
 \noindent
+
+Or try the \texttt{find} function.
+
+\mdbcmdline{db.experiment.find(\\
+\{"experimental\_method":\{\$ne:"X-ray diffraction"\}\}, \\
+\{"experimental\_method":1\})
+}
+
+\noindent
+which will print out the first 20 results an ask if you want to see more.
+
+\vspace{5mm}
+\noindent
+You can also count.
+To see how many entries are in \mdbcol{experiment}, issue :
+
+\mdbcmdline{db.experiment.count() \\
+118970}
+
+\noindent
+As of the date this was written, there are 118,9870 entries in \mdbcol{experiment}.
+To see how mant of these were soved via X-ray diffraction enter the query as we did before when using \texttt{findOne} and \texttt{find}.
+
+\mdbcmdline{db.experiment.count(\\
+\{"experimental\_method" : "X-ray diffraction"\}) \\
+106306}
+
+\noindent
+As of the date this was written, there are 106,306 entries in the collection that were solved via X-ray diffraction.
+
+
+\section{Interacting with MongoDB with Python}
+\subsection{Installing pymongo}
+In order to interact with the MongoDB with Python you need to install pymongo.
+I reccomend installing from source so you install the dependencies with you PHENIX python.
+For up-to-date instructions, consult Google.
+The essentials are:
+
+\vspace{5mm}
+\noindent
+\texttt{\$ git clone git://github.com/mongodb/mongo-python-driver.git pymongo}
+
+\noindent
+\texttt{\$ cd pymongo/}
+
+\noindent
+\texttt{\$ python setup.py install}
+
+\vspace{5mm}
+\noindent
+If you want pymongo available with PHENIX tools, ensure you source PHENIX befor doing the above install.
+
+\subsection{Connecting To MongoDB on daneel} 
+\begin{lstlisting}[language=python]
+from pymongo import MongoClient
+uri = "mongodb://%s:%s@daneel.research.duhs.duke.edu/"
+
+\end{lstlisting}
+
 \end{document}
