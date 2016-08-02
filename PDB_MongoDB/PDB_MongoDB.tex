@@ -2,8 +2,10 @@
 \usepackage[usenames, dvipsnames]{xcolor}
 \usepackage{listings}
 
+\definecolor{myGray}{rgb}{0.9,0.9,0.9}
+
 \lstset{ %
-  backgroundcolor=\color{gray},   % choose the background color
+  backgroundcolor=\color{myGray},   % choose the background color
   basicstyle=\footnotesize,        % size of fonts used for the code
   breaklines=true,                 % automatic line breaking only at whitespace
   captionpos=b,                    % sets the caption-position to bottom
@@ -60,7 +62,7 @@ Collections within \mdbdb{top8000\_rota\_data} are listed in Table \ref{tab:T8kD
 
 \begin{table}[h]
 \caption{Contents of \mdbdb{top8000\_rota\_data}}
-\begin{tabular}{l|p{9cm}}
+\begin{tabular}{l|p{8cm}}
 %  \hline
   \textbf{Collection} & \textbf{Contents} \\ \hline
   \mdbcol{rsc} & Real-space correlation data at the residue level. \\ \hline
@@ -116,7 +118,15 @@ If the sever is running you can enter the MongoDB shell :
 You should now be in the shell.
 To view the databases on the system:
 
-\mdbcmdline{show databases}
+\begin{verbatim}
+> show databases
+admin                0.000GB
+local                0.000GB
+pdb_info           168.198GB
+test                 0.001GB
+top8000_rota_data    0.230GB
+\end{verbatim}
+
 \noindent
 Most of the data on individual PDB entries are in the \mdbdb{pdb\_info} database.
 Top8000 data is in the \mdbdb{top8000\_rota\_data} database.
@@ -240,7 +250,9 @@ The essentials are:
 
 \vspace{5mm}
 \noindent
-\texttt{\$ git clone git://github.com/mongodb/mongo-python-driver.git pymongo}
+\texttt{\$ git clone \\
+\indent
+git://github.com/mongodb/mongo-python-driver.git pymongo}
 
 \noindent
 \texttt{\$ cd pymongo/}
@@ -250,13 +262,84 @@ The essentials are:
 
 \vspace{5mm}
 \noindent
-If you want pymongo available with PHENIX tools, ensure you source PHENIX befor doing the above install.
+If you want pymongo available with PHENIX tools, ensure you source PHENIX before doing the above install.
 
-\subsection{Connecting To MongoDB on daneel} 
+\newpage
+\subsection{Connecting to MongoDB on daneel}
+Interacting with Mongo in python is pretty intuitive.
+First you need to connect and set the database.
+
 \begin{lstlisting}[language=python]
 from pymongo import MongoClient
-uri = "mongodb://%s:%s@daneel.research.duhs.duke.edu/"
 
+# connect to MongoDB on daneel
+uri = "mongodb://user:psw@daneel.research.duhs.duke.edu/"
+client = MongoClient(uri)
+
+# get desired database
+database = 'pdb_info'
+db = getattr(client,database)
 \end{lstlisting}
 
+\noindent
+Now we're ready to query the database much like we did in the shell.
+This time queries are native Python dictionaries.
+A count query looks like:
+
+\begin{lstlisting}[language=python]
+query = {"experimental_method":"X-ray diffraction"}
+n = db.experiment.count(query)
+\end{lstlisting}
+
+\noindent
+Now we can put it all together.
+%\newpage
+
+\begin{lstlisting}[language=python]
+from pymongo import MongoClient
+import getpass
+
+# get Mongo credentials
+msg = "Please enter your Mongo username on daneel:"
+user = raw_input(msg)
+print "Please enter the Mongo password on daneel for %s:" % user
+psw = getpass.getpass()
+
+# connect to MongoDB on daneel
+uri = "mongodb://%s:%s@daneel.research.duhs.duke.edu/"
+client = MongoClient(uri% (user,psw))
+
+# get desired database
+database = 'pdb_info'
+db = getattr(client,database)
+
+# Now you're ready to query the database 
+expmet = "X-ray diffraction"
+query = {"experimental_method" : expmet}
+print "Your query is:\n  %s" % query
+n = db.experiment.count(query)
+msg = 'There are %i entries in the expriment collection that were solved via %s'
+print msg % (n,expmet)
+\end{lstlisting}
+
+\noindent
+Now let's get a list of PDBs that are above 1 \AA{} resolution.
+Here I'll just list the first 10.
+
+\begin{lstlisting}[language=python]
+high_resolution = 1.0
+query = {"experimental_method" : "X-ray diffraction"}
+query['resolution'] = {'$lte':high_resolution}
+projection = {"_id":1}
+n = 10
+pdbs = db.experiment.find(query, projection)
+msg = "Here are the first %i PDBs with a resolution above %.1f"
+print msg % (n,high_resolution)
+for i,d in enumerate(pdbs) :
+  print d['_id']['pdb_id']
+  if i > n : break
+\end{lstlisting}
+
+\noindent
+Pretty easy. Any questions ask Google or Bradley.
 \end{document}
