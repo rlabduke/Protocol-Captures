@@ -346,4 +346,36 @@ Any questions?
 Ask Google or Bradley.
 Also note that there are more examples (real ones I used to get various data for the lab) on Github under lab\_scripts.
 These are a bit more complicated (e.g. the connection to the database is its own object) but all of the essential elements are there.
+
+\section{Updating the Database}
+
+There are three collections that are used the most which require updating if you want to capture the most recently deposited dtructures in your queries. The collections are \mdbcol{experiment}, \mdbcol{summary} and \mdbcol{residues\_colkeys}.
+
+\subsection{Updating \mdbcol{experiment} and \mdbcol{summary}}
+
+Updating the \mdbcol{experiment} and \mdbcol{summary} collections in the \mdbdb{pdb\_info} database is rather straightforward since the JSON document that make up a given entry comes straight from the PDB using the PDBe python API. The scripts for doing this are in lab\_scripts (which is available on Github) in the directory called 'update\_mongo'. The script requires an updated list of PDB codes. We get this using our local PDB mirror on muscle.
+
+\begin{itemize}
+\item On muscle, issue \\
+\cmdline{find /home/pdber/Desktop/PdbData/ -name '*.ent.gz' \\\\ \\ $>$ allpdbs.l}
+\item Copy allpdbs.l to lab\_scripts/update\_mongo (allpdbs.l is in .gitignore) on your machine or wherever you're running this.
+\item No you're ready to update.
+\end{itemize}
+
+\noindent
+Now that you have allpdbs.l we can update. Make sure that you are in\\lab\_scripts/update\_mongo. The script that runs the updates is called\\ \texttt{update\_pdbe\_collections.py}. Ensur that you are using a python that has pymongo available to it. You can get help by:
+
+\cmdline{python update\_pdbe\_collections.py -h}
+
+\noindent
+By default, the script updates \mdbcol{experiment}. To do this simply do:
+
+\cmdline{python update\_pdbe\_collections.py}
+
+\noindent
+To update \mdbcol{summary} simply do:
+
+\cmdline{python update\_pdbe\_collections.py -t summary}
+
+
 \end{document}
