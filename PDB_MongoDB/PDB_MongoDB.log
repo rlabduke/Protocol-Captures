@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.6.18)  4 AUG 2016 09:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.6.18)  4 AUG 2016 10:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -187,17 +187,13 @@ cmr/bx/n/12 pdb[]info[] \OT1/cmr/m/n/12 database
 
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 359.
-
-Underfull \hbox (badness 10000) in paragraph at lines 359--360
-
+[9]
+Overfull \hbox (13.93274pt too wide) in paragraph at lines 387--388
+\OT1/cmr/m/n/12 Unfortunately []\OT1/cmr/bx/n/12 residues[]colkeys[] \OT1/cmr/m
+/n/12 is not straight-for-ward to up-date. Ask Bradley. 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 359--360
-
- []
-
-[9] [10] (./PDB_MongoDB.aux)
+[10] (./PDB_MongoDB.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -219,7 +215,7 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist
 type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
 /amsfonts/cm/cmtt12.pfb>
-Output written on PDB_MongoDB.pdf (10 pages, 130311 bytes).
+Output written on PDB_MongoDB.pdf (10 pages, 131128 bytes).
 PDF statistics:
  73 PDF objects out of 1000 (max. 8388607)
  51 compressed objects within 1 object stream

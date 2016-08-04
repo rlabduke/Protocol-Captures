@@ -1,5 +1,5 @@
 \contentsline {section}{\numberline {1}Introduction}{2}
-\contentsline {section}{\numberline {2}Contents of the PDB MongdDB}{2}
+\contentsline {section}{\numberline {2}Contents of the PDB MongoDB}{2}
 \contentsline {section}{\numberline {3}Using the MongoDB shell}{3}
 \contentsline {subsection}{\numberline {3.1}Queries in the Shell Environment}{5}
 \contentsline {section}{\numberline {4}Interacting with MongoDB with Python}{7}
@@ -7,3 +7,4 @@
 \contentsline {subsection}{\numberline {4.2}Connecting to MongoDB on daneel}{8}
 \contentsline {section}{\numberline {5}Updating the Database}{9}
 \contentsline {subsection}{\numberline {5.1}Updating {\color {Bittersweet}\textbf {experiment}} and {\color {Bittersweet}\textbf {summary}}}{9}
+\contentsline {subsection}{\numberline {5.2}Updating {\color {Bittersweet}\textbf {residues\_colkeys}}}{10}

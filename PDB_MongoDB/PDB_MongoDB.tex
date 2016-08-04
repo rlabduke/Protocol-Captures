@@ -30,7 +30,7 @@
 \newcommand{\mdbdb}[1]{{\color{BlueViolet}\textbf{#1}}}
 \newcommand{\mdbcol}[1]{{\color{Bittersweet}\textbf{#1}}}
 
-\title{Using the PDB MongoDB in the Richarson Lab}
+\title{Using the PDB MongoDB in the Richardson Lab}
 \author{Bradley J. Hintze}
 \date{\today}
 
@@ -41,23 +41,23 @@
 \newpage
 
 \section{Introduction}
-Herin you will find various topics relating to the use of the MongoDB in the Richardson Lab including the MongoDB shell, updating the database, and python query scripts.
-Note the following conventions for distiguishing command line types.
-Command line arguments that begin with a \$ denote the linux command line. e.g.
+Herein you will find various topics relating to the use of the MongoDB in the Richardson Lab including the MongoDB shell, updating the database, and python query scripts.
+Note the following conventions for distinguishing command line types.
+Command line arguments that begin with a \$ denote the Linux command line. e.g.
 
 \cmdline{phenix.probe 1ubqH.pdb}
 \noindent
-Command line arguments that begin with a $>$ denote the Mongodb command line. e.g.
+Command line arguments that begin with a $>$ denote the MongoDB command line. e.g.
 
 \mdbcmdline{show databases}
 
 \noindent
-Note that within the text of this document database names are in \mdbdb{blue} and collection names are in \mdbcol{drak orange}.
+Note that within the text of this document database names are in \mdbdb{blue} and collection names are in \mdbcol{dark orange}.
 
-\section{Contents of the PDB MongdDB}
+\section{Contents of the PDB MongoDB}
 \label{sec:MongoDBContents}
 There are two main databases that are relevant for most queries we are interested in running -- \mdbdb{top8000\_rota\_data} and \mdbdb{pdb\_info}.
-The collections within the \mdbdb{top8000\_rota\_data} database are duplicats of tables from the original Top8000 SQL database on c3po maintained by Bradley during his dissertation years.
+The collections within the \mdbdb{top8000\_rota\_data} database are duplicates of tables from the original Top8000 SQL database on c3po maintained by Bradley during his dissertation years.
 Collections within \mdbdb{top8000\_rota\_data} are listed in Table \ref{tab:T8kDB}.
 
 \begin{table}[h]
@@ -81,10 +81,10 @@ Collections within \mdbdb{pdb\_info} are listed in Table \ref{tab:pdbinfoDB}.
 \begin{tabular}{l|p{9cm}}
 %  \hline
   \textbf{Collection} & \textbf{Contents} \\ \hline
-  \mdbcol{experiment} & Has expermental data taken straight from PDBe. Actively updated using the update\_mongo script in lab\_scripts. \\ \hline
+  \mdbcol{experiment} & Has experimental data taken straight from PDBe. Actively updated using the update\_mongo script in lab\_scripts. \\ \hline
   \mdbcol{summary} & Has summary data taken straight from PDBe. Actively updated using the update\_mongo script in lab\_scripts. \\ \hline
    \mdbcol{pdb\_residues} & Comprehensive validation metrics on the residue level. Not actively updated. \\ \hline
-   \mdbcol{residues\_colkeys} & Comprehensive validation metrics on the residue level. Not actively updated. I believe this is the one we want to keep up-to-date rather than \mdbcol{pdb\_residues} -- the difference being the colon separated '\_id' -- useful to do a quick lookup. \\ \hline
+   \mdbcol{residues\_colkeys} & Comprehensive validation metrics on the residue level. Not actively updated. I believe this is the one we want to keep up-to-date rather than \mdbcol{pdb\_residues} -- the difference being the colon separated '\_id' -- useful to do a quick look up. \\ \hline
    \mdbcol{rscc} & Real-space correlation info on the residue level. Not actively updated. Use \mdbcol{residues\_colkeys} instead. \\ \hline
    \mdbcol{file\_info} & Various PDB entry level data from on of my scripts. Not actively updated. \\ \hline
 \end{tabular}
@@ -92,17 +92,17 @@ Collections within \mdbdb{pdb\_info} are listed in Table \ref{tab:pdbinfoDB}.
 \end{table}
 
 \section{Using the MongoDB shell}
-Currently the MongoDB in the richardson lab is maitained on Daneel. 
+Currently the MongoDB in the Richardson lab is maintained on Daneel. 
 To log into the shell you will need to ssh onto daneel.
 
 \cmdline{ssh user@daneel.research.duhd.duke.edu}
 \noindent
 You may need to have permissions set up to do this -- Bradley can help you get that setup.
 Currently you need to be in the lab to ssh onto daneel (I think).
-In the future we may put this on muscle so you can be anywhere and when we do, this section should be upadted to reflect that.
+In the future we may put this on muscle so you can be anywhere and when we do, this section should be updated to reflect that.
 \noindent
-Now you neet to enter the MongoDB shell.
-The MongoDB server should be running automatically as I set it up to start on startup.
+Now you need to enter the MongoDB shell.
+The MongoDB server should be running automatically as I set it up to start on start up.
 To see if the server is running:
 
 \cmdline{ps aux | grep mongo}
@@ -139,7 +139,7 @@ Now that you are using a particular database you can see what collections exist 
 You can think of a collection as an SQL table.
 Unlike SQL tables, collections can differ in what info they hold (except for the '\_id' record).
 e.g. a PDB entry in the 'experiment' collection will have \texttt{resolution} if 'experimental\_method' is 'X-ray diffraction' but not if it is 'Solution NMR'.
-The neuances relating to differing record-schemas within a given collection is beyond the scope of this document but you should be aware of it. To view the collections:
+The nuances relating to differing record-schemas within a given collection is beyond the scope of this document but you should be aware of it. To view the collections:
 
 \mdbcmdline{show collections\\
 experiment\\
@@ -151,7 +151,7 @@ summary}
 
 \subsection{Queries in the Shell Environment}
 You can do queries in the MongoDB shell. 
-This isn't where you will do prodction type work but it is a place to get an idea of what type of data a given collection holds.
+This isn't where you will do production type work but it is a place to get an idea of what type of data a given collection holds.
 It is also good for getting quick counts.
 e.g. How many PDB entries were solved via X-ray diffraction?
 So let's tackle this question.
@@ -171,9 +171,9 @@ FROM experiment}
 \noindent
 which returns every column in the table. 
 (Note that a 'column' in SQL space is essentially a 'document' in MongoDB space.)
-However, its ok if you accidently issue \texttt{db.experiment.find()} in the shell as MongoDB returns just 20 documents at a time and asks if you'd like to see more.
+However, its OK if you accidental issue \texttt{db.experiment.find()} in the shell as MongoDB returns just 20 documents at a time and asks if you'd like to see more.
 When we issue the \texttt{db.experiment.findOne()} command we get one document and we get \textit{every} record in that document.
-The returned ducument should be in JSON format and can be though of as a python dictionary -- a 'record' consists of a key and value.
+The returned document should be in JSON format and can be though of as a python dictionary -- a 'record' consists of a key and value.
 The returned document should hold a record called \texttt{experimental\_method} and the value is a string.
 
 \vspace{5mm}
@@ -183,7 +183,7 @@ The returned document should hold a record called \texttt{experimental\_method} 
 \vspace{5mm}
 \noindent
 We have to know the exact string for X-ray diffraction in order to query it but the one record we found returned "Solution NMR".
-We can ust \texttt{findOne} with a query.
+We can use \texttt{findOne} with a query.
 Queries in MongoDB are just like JSON documents (of Python dictionaries).
 Again, the different options for querying within MongoDB is beyond the scope of this document -- Google is here to help!
 The query to find documents where "Solution NMR" is not the "experimental\_method" looks like \texttt{\{"experimental\_method":\{\$ne:"X-ray diffraction"\}\}}. \$ne stands for 'not equal'.
@@ -202,8 +202,8 @@ To return just the "experimental\_method" issue this:
 }
 
 \noindent
-Note that the '\_id' record is returned by defaut.
-You can supress this by issuing:
+Note that the '\_id' record is returned by default.
+You can suppress this by issuing:
 
 \mdbcmdline{db.experiment.findOne(\\
 \{"experimental\_method":\{\$ne:"X-ray diffraction"\}\}, \\
@@ -231,7 +231,7 @@ To see how many entries are in \mdbcol{experiment}, issue :
 
 \noindent
 As of the date this was written, there are 118,9870 entries in \mdbcol{experiment}.
-To see how mant of these were soved via X-ray diffraction enter the query as we did before when using \texttt{findOne} and \texttt{find}.
+To see how many of these were solved via X-ray diffraction enter the query as we did before when using \texttt{findOne} and \texttt{find}.
 
 \mdbcmdline{db.experiment.count(\\
 \{"experimental\_method" : "X-ray diffraction"\}) \\
@@ -244,13 +244,13 @@ As of the date this was written, there are 106,306 entries in the collection tha
 \section{Interacting with MongoDB with Python}
 \subsection{Installing pymongo}
 In order to interact with the MongoDB with Python you need to install pymongo.
-I reccomend installing from source so you install the dependencies with you PHENIX python.
+I recommend installing from source so you install the dependencies with you PHENIX python.
 For up-to-date instructions, consult Google.
 The essentials are:
 
 \vspace{5mm}
 \noindent
-\texttt{\$ git clone \\
+\texttt{\$ git clone / \\
 \indent
 git://github.com/mongodb/mongo-python-driver.git pymongo}
 
@@ -349,7 +349,7 @@ These are a bit more complicated (e.g. the connection to the database is its own
 
 \section{Updating the Database}
 
-There are three collections that are used the most which require updating if you want to capture the most recently deposited dtructures in your queries. The collections are \mdbcol{experiment}, \mdbcol{summary} and \mdbcol{residues\_colkeys}.
+There are three collections that are used the most which require updating if you want to capture the most recently deposited structures in your queries. The collections are \mdbcol{experiment}, \mdbcol{summary} and \mdbcol{residues\_colkeys}.
 
 \subsection{Updating \mdbcol{experiment} and \mdbcol{summary}}
 
@@ -357,16 +357,21 @@ Updating the \mdbcol{experiment} and \mdbcol{summary} collections in the \mdbdb{
 
 \begin{itemize}
 \item On muscle, issue \\
-\cmdline{find /home/pdber/Desktop/PdbData/ -name '*.ent.gz' \\\\ \\ $>$ allpdbs.l}
+\indent
+\$ find /home/pdber/Desktop/PdbData/ -name '*.ent.gz' /\\ $>$ allpdbs.l
 \item Copy allpdbs.l to lab\_scripts/update\_mongo (allpdbs.l is in .gitignore) on your machine or wherever you're running this.
 \item No you're ready to update.
 \end{itemize}
 
 \noindent
-Now that you have allpdbs.l we can update. Make sure that you are in\\lab\_scripts/update\_mongo. The script that runs the updates is called\\ \texttt{update\_pdbe\_collections.py}. Ensur that you are using a python that has pymongo available to it. You can get help by:
+Now that you have allpdbs.l we can update. Make sure that you are in\\lab\_scripts/update\_mongo. The script that runs the updates is called\\ \texttt{update\_pdbe\_collections.py}. Ensue that you are using a python that has pymongo available to it. You can get help by:
 
 \cmdline{python update\_pdbe\_collections.py -h}
 
+\noindent
+When running update\_pdbe\_collections.py you will be asked for a username a password. for now us 'bhintze' and the corresponding password.
+
+\vspace{5mm}
 \noindent
 By default, the script updates \mdbcol{experiment}. To do this simply do:
 
@@ -377,5 +382,7 @@ To update \mdbcol{summary} simply do:
 
 \cmdline{python update\_pdbe\_collections.py -t summary}
 
+\subsection{Updating \mdbcol{residues\_colkeys}}
 
+Unfortunately \mdbcol{residues\_colkeys} is not straightforward to update. Ask Bradley.
 \end{document}
