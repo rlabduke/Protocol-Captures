@@ -1,0 +1,105 @@
+\documentclass[12pt]{article}
+\usepackage[usenames, dvipsnames]{xcolor}
+\usepackage{listings}
+
+\definecolor{myGray}{rgb}{0.9,0.9,0.9}
+
+\lstset{ %
+  backgroundcolor=\color{myGray},   % choose the background color
+  basicstyle=\footnotesize,        % size of fonts used for the code
+  breaklines=true,                 % automatic line breaking only at whitespace
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{PineGreen},    % comment style
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  keywordstyle=\color{blue},       % keyword style
+  stringstyle=\color{BrickRed},     % string literal style
+}
+
+\newcommand{\cmdline}[1]{\vspace{5mm} \noindent
+\texttt{\$ #1}
+\vspace{5mm}
+
+}
+
+
+\begin{document}
+
+\title{Bradley's Notes on Doing Random Stuff with PDB Structures}
+\author{Bradley J. Hintze}
+\date{\today}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\section{Creating Maps and Kinemages for a Given PDB}
+This is a rather easy thing to do. We will use \texttt{phenix.fetch\_pdb}, \texttt{phenix.maps} and \texttt{phenix.kinemage}.
+\begin{enumerate}
+  \item Fetch the PDB files (including SFs) from the PDB and create an SF mtz.
+  
+  \vspace{-6mm}
+  \cmdline{phenix.fetch\_pdb --mtz 1ORN}
+  \vspace{-6mm}
+  \item Create kinemage.
+
+  \vspace{-6mm}
+  \cmdline{phenix.kinemage 1ORN.pdb}
+  \vspace{-6mm}
+  \item Calculate 2mF$_{o}$-DF$_{c}$ and mF$_{o}$-DF$_{c}$ maps as well as map coefficients (needed for \texttt{mmtbx.flipbase}).
+  
+  \vspace{-6mm}
+  \cmdline{phenix.maps map.map\_type=2mFo-DFc map.map\_type=mFo-DFc\\
+  map\_coefficients.map\_type=2mFo-DFc 1ORN.pdb 1ORN.mtz}
+\end{enumerate}
+
+\subsection{bash script}
+Here it is in a bash script.
+\begin{lstlisting}[language=bash]
+# $1 is the first argument witch is expected to be a PDB code.
+# Note that PHENIX must be souced to run this script.
+#
+# This script makes a directory with the name of the given PDB
+# code and downloads PDB data, creates a kinemage, and calculates maps.
+
+mkdir $1
+cd $1
+phenix.fetch_pdb --mtz $1
+phenix.kinemage $1.pdb
+phenix.maps map.map_type=2mFo-DFc map.map_type=mFo-DFc map_coefficients.map_type=2mFo-DFc $1.pdb $1.mtz
+cd ..
+\end{lstlisting}
+
+\noindent
+Save this as get\_pdb.sh. To run :  
+
+  \vspace{-6mm}
+  \cmdline{bash get\_pdb.sh 1ORN}
+
+
+\section{DNA Stuff}
+\subsection{Flip A Purine 180$^{\circ}$}
+There is a tool within cctbx that can do this and is called \textit{mmtbx.flipbase}. It works by flipping the given purine by 180$^{\circ}$ about the glycosidic bond and then doing 3 cycles of real-space refinement to bring the purine into the optimal place in the density. This means that you actually need density for this tool to work reasonably -- no wishful flipping. As of today (11/8/2016) \texttt{mmtbx.flipbase} cannot handle ligands that require cif restraint files in refinement. This is super annoying because \texttt{mmtbx.flipbase} only refines the given residues and you should only be flippind canonical DNA bases (if you can and want to fix this issue everyone would appreciate it). The following steps are how to get arround this issue. If you don't have ligands that require cif restraints then you can run \texttt{mmtbx.flipbase} on the unmodified PDB (Step 3).
+
+\begin{enumerate}
+  \item Copy the original file.
+  
+  \vspace{-6mm}
+  \cmdline{cp 1ORN.pdb 1ORNNOHETS.pdb}
+  \vspace{-6mm}
+  \item Delete the HETATM records for the ligands (waters and metals ar OK to keep).
+  \item Run \texttt{mmtbx.flipbase}. It will create 1ORNNOHETS\_flipbase.pdb.
+  
+  \vspace{-6mm}
+  \cmdline{mmtbx.flipbase 1ORNNOHETS.pdb 1ORN\_map\_coeffs.mtz chain=B res\_num=1}
+  \vspace{-6mm}
+  \item Copy the original file.
+  
+  \vspace{-6mm}
+  \cmdline{cp 1ORN.pdb 1ORN\_flip.pdb}
+  \vspace{-6mm}
+  \item Replace the ATOM records for the purine of interest in 1ORN\_flip.pdb with the ones in 1ORNNOHETS\_flipbase.pdb.
+\end{enumerate}
+
+\end{document}
