@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.6.18)  4 AUG 2016 10:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.6.18)  16 AUG 2016 14:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -134,24 +134,18 @@ LaTeX Font Info:    External font `cmex10' loaded for size
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-[2] [3]
-Overfull \hbox (6.48042pt too wide) in paragraph at lines 130--135
-\OT1/cmr/m/n/12 Top8000 data is in the []\OT1/cmr/bx/n/12 top8000[]rota[]data[]
- \OT1/cmr/m/n/12 database. To use a given database: 
- []
-
-[4]
-LaTeX Font Info:    Try loading font information for OMS+cmtt on input line 189
+[2] [3] [4]
+LaTeX Font Info:    Try loading font information for OMS+cmtt on input line 177
 .
-LaTeX Font Info:    No file OMScmtt.fd. on input line 189.
+LaTeX Font Info:    No file OMScmtt.fd. on input line 177.
 
 
 LaTeX Font Warning: Font shape `OMS/cmtt/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbraceleft' on input line 189.
+(Font)              for symbol `textbraceleft' on input line 177.
 
 [5] [6]
-Overfull \hbox (7.621pt too wide) in paragraph at lines 264--266
+Overfull \hbox (7.621pt too wide) in paragraph at lines 252--254
 \OT1/cmr/m/n/12 If you want py-mongo avail-able with PHENIX tools, en-sure you 
 source PHENIX
  []
@@ -159,36 +153,36 @@ source PHENIX
 [7] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2015/06/04 1.6 listings language file
 )
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 290.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 278.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 290.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 278.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 290.
+(Font)              <5> on input line 278.
  [8]
-LaTeX Font Info:    Try loading font information for OML+cmr on input line 340.
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 328.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 340.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 328.
 
-Overfull \hbox (12.14928pt too wide) in paragraph at lines 356--357
+Overfull \hbox (12.14928pt too wide) in paragraph at lines 344--345
 \OT1/cmr/m/n/12 Updating the []\OT1/cmr/bx/n/12 ex-per-i-ment[] \OT1/cmr/m/n/12
  and []\OT1/cmr/bx/n/12 sum-mary[] \OT1/cmr/m/n/12 col-lec-tions in the []\OT1/
 cmr/bx/n/12 pdb[]info[] \OT1/cmr/m/n/12 database
  []
 
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 359.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 347.
 [9]
-Overfull \hbox (13.93274pt too wide) in paragraph at lines 387--388
+Overfull \hbox (13.93274pt too wide) in paragraph at lines 375--376
 \OT1/cmr/m/n/12 Unfortunately []\OT1/cmr/bx/n/12 residues[]colkeys[] \OT1/cmr/m
 /n/12 is not straight-for-ward to up-date. Ask Bradley. 
  []
@@ -215,7 +209,7 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist
 type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
 /amsfonts/cm/cmtt12.pfb>
-Output written on PDB_MongoDB.pdf (10 pages, 131128 bytes).
+Output written on PDB_MongoDB.pdf (10 pages, 129788 bytes).
 PDF statistics:
  73 PDF objects out of 1000 (max. 8388607)
  51 compressed objects within 1 object stream

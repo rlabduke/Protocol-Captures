@@ -92,14 +92,12 @@ Collections within \mdbdb{pdb\_info} are listed in Table \ref{tab:pdbinfoDB}.
 \end{table}
 
 \section{Using the MongoDB shell}
-Currently the MongoDB in the Richardson lab is maintained on Daneel. 
+Currently the MongoDB in the Richardson lab is maintained on caldera. 
 To log into the shell you will need to ssh onto daneel.
 
-\cmdline{ssh user@daneel.research.duhd.duke.edu}
+\cmdline{ssh user@caldera\_ip\_addy}
 \noindent
 You may need to have permissions set up to do this -- Bradley can help you get that setup.
-Currently you need to be in the lab to ssh onto daneel (I think).
-In the future we may put this on muscle so you can be anywhere and when we do, this section should be updated to reflect that.
 \noindent
 Now you need to enter the MongoDB shell.
 The MongoDB server should be running automatically as I set it up to start on start up.
@@ -107,27 +105,17 @@ To see if the server is running:
 
 \cmdline{ps aux | grep mongo}
 \noindent
-\texttt{root 99 0.0 0.4 ... /Users/bhintze/.../mongodb/bin/mongod}
+\texttt{mongo 99 0.0 0.4 .../bin/mongod}
 
 \vspace{5mm}
 \noindent
-If the sever is running you can enter the MongoDB shell :
+If the sever is running you can enter the MongoDB shell. Use the rlab user :
 
-\cmdline{mongo}
+\cmdline{mongo -u rlab -p}
 \noindent
+You will be asked fro the password for rlab, which you know.
 You should now be in the shell.
-To view the databases on the system:
-
-\begin{verbatim}
-> show databases
-admin                0.000GB
-local                0.000GB
-pdb_info           168.198GB
-test                 0.001GB
-top8000_rota_data    0.230GB
-\end{verbatim}
-
-\noindent
+There are two databases that you have access to,  \mdbdb{pdb\_info} and \mdbdb{top8000\_rota\_data}.
 Most of the data on individual PDB entries are in the \mdbdb{pdb\_info} database.
 Top8000 data is in the \mdbdb{top8000\_rota\_data} database.
 \noindent
@@ -186,18 +174,18 @@ We have to know the exact string for X-ray diffraction in order to query it but 
 We can use \texttt{findOne} with a query.
 Queries in MongoDB are just like JSON documents (of Python dictionaries).
 Again, the different options for querying within MongoDB is beyond the scope of this document -- Google is here to help!
-The query to find documents where "Solution NMR" is not the "experimental\_method" looks like \texttt{\{"experimental\_method":\{\$ne:"X-ray diffraction"\}\}}. \$ne stands for 'not equal'.
+The query to find documents where "Solution NMR" is not the "experimental\_method" looks like \texttt{\{"experimental\_method":\{\$ne:"Solution NMR"\}\}}. \$ne stands for 'not equal'.
 This query document is placed within the parens of \texttt{findOne} or \texttt{find}.
 
 \mdbcmdline{db.experiment.findOne(\\
-\{"experimental\_method":\{\$ne:"X-ray diffraction"\}\})}
+\{"experimental\_method":\{\$ne:"Solution NMR"\}\})}
 \noindent
 Here we have given \texttt{findOne} one argument -- the query. 
 \texttt{findOne} actually takes two optional arguments, the second is a JSON document that tells the program what records to return.
 To return just the "experimental\_method" issue this:
 
 \mdbcmdline{db.experiment.findOne(\\
-\{"experimental\_method":\{\$ne:"X-ray diffraction"\}\}, \\
+\{"experimental\_method":\{\$ne:"Solution NMR"\}\}, \\
 \{"experimental\_method":1\})
 }
 
@@ -206,7 +194,7 @@ Note that the '\_id' record is returned by default.
 You can suppress this by issuing:
 
 \mdbcmdline{db.experiment.findOne(\\
-\{"experimental\_method":\{\$ne:"X-ray diffraction"\}\}, \\
+\{"experimental\_method":\{\$ne:"Solution NMR"\}\}, \\
 \{"experimental\_method":1,"\_id":0\})
 }
 \noindent
@@ -214,7 +202,7 @@ You can suppress this by issuing:
 Or try the \texttt{find} function.
 
 \mdbcmdline{db.experiment.find(\\
-\{"experimental\_method":\{\$ne:"X-ray diffraction"\}\}, \\
+\{"experimental\_method":\{\$ne:"Solution NMR"\}\}, \\
 \{"experimental\_method":1\})
 }
 
@@ -265,15 +253,18 @@ git://github.com/mongodb/mongo-python-driver.git pymongo}
 If you want pymongo available with PHENIX tools, ensure you source PHENIX before doing the above install.
 
 \newpage
-\subsection{Connecting to MongoDB on daneel}
+\subsection{PyMongo}
 Interacting with Mongo in python is pretty intuitive.
 First you need to connect and set the database.
+To do so, the safest way is to create an ssh tunnel to the machine that has the database (and has the mongod deamon running) from your local machine.
+The way we create a tunnel is forthcoming to this document.
+Once the tunnel is established, you can run the python commands below.
 
 \begin{lstlisting}[language=python]
 from pymongo import MongoClient
 
 # connect to MongoDB on daneel
-uri = "mongodb://user:psw@daneel.research.duhs.duke.edu/"
+uri = "mongodb://user:psw@127.0.0.1/?authSource=test"
 client = MongoClient(uri)
 
 # get desired database
@@ -282,7 +273,7 @@ db = getattr(client,database)
 \end{lstlisting}
 
 \noindent
-Now we're ready to query the database much like we did in the shell.
+Now we're ready to query the database called pdb\_info much like we did in the shell.
 This time queries are native Python dictionaries.
 A count query looks like:
 
@@ -300,18 +291,21 @@ from pymongo import MongoClient
 import getpass
 
 # get Mongo credentials
-msg = "Please enter your Mongo username on daneel:"
+msg = "Please enter your Mongo username (probably rlab):"
 user = raw_input(msg)
-print "Please enter the Mongo password on daneel for %s:" % user
+print "Please enter the Mongo password for %s:" % user
 psw = getpass.getpass()
 
-# connect to MongoDB on daneel
-uri = "mongodb://%s:%s@daneel.research.duhs.duke.edu/"
+# connect to MongoDB (ensure that you setup the ssh tunnel correctly or
+# it will look for the mongo deamon on your local machine.)
+uri = "mongodb://%s:%s@127.0.0.1/?authSource=test"
 client = MongoClient(uri% (user,psw))
 
 # get desired database
 database = 'pdb_info'
 db = getattr(client,database)
+# or this works:
+# db = client.pdb_info
 
 # Now you're ready to query the database 
 expmet = "X-ray diffraction"
@@ -360,7 +354,7 @@ Updating the \mdbcol{experiment} and \mdbcol{summary} collections in the \mdbdb{
 \indent
 \$ find /home/pdber/Desktop/PdbData/ -name '*.ent.gz' /\\ $>$ allpdbs.l
 \item Copy allpdbs.l to lab\_scripts/update\_mongo (allpdbs.l is in .gitignore) on your machine or wherever you're running this.
-\item No you're ready to update.
+\item Now you're ready to update.
 \end{itemize}
 
 \noindent
