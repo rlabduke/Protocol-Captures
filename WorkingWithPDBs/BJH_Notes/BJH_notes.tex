@@ -78,6 +78,39 @@ Save this as get\_pdb.sh. To run :
   \cmdline{bash get\_pdb.sh 1ORN}
 
 
+\section{Simple Refinement}
+There are lots of refinement options but here I will tell you just the basics. The mos basic refinement is ran as follows:
+
+\vspace{-6mm}
+\cmdline{phenix.refine 1ORN.pdb 1ORN.mtz}
+
+\noindent
+To do 10 macrocycles (default = 3):
+
+\vspace{-6mm}
+\cmdline{phenix.refine 1ORN.pdb 1ORN.mtz main.number\_of\_macro\_cycles=10}
+
+\noindent
+If you get something like this:
+
+\vspace{3mm}
+\texttt{  Number of atoms with unknown nonbonded energy type symbols: 11}
+\vspace{3mm}
+
+\noindent
+it means that you have ligands that need restraints. To do this run \texttt{phenix.ready\_set}
+
+\vspace{-6mm}
+\cmdline{phenix.ready\_set 1ORN.pdb}
+
+\noindent
+This will create a cif file, called \texttt{1ORN.ligands.cif}, with the ligand restraints required for refinement.
+
+\vspace{-6mm}
+\cmdline{phenix.refine 1ORN.pdb 1ORN.mtz 1ORN.ligands.cif\\
+main.number\_of\_macro\_cycles=10}
+
+
 \section{DNA Stuff}
 \subsection{Flip A Purine 180$^{\circ}$}
 There is a tool within cctbx that can do this and is called \textit{mmtbx.flipbase}. It works by flipping the given purine by 180$^{\circ}$ about the glycosidic bond and then doing 3 cycles of real-space refinement to bring the purine into the optimal place in the density. This means that you actually need density for this tool to work reasonably -- no wishful flipping. As of today (11/8/2016) \texttt{mmtbx.flipbase} cannot handle ligands that require cif restraint files in refinement. This is super annoying because \texttt{mmtbx.flipbase} only refines the given residues and you should only be flippind canonical DNA bases (if you can and want to fix this issue everyone would appreciate it). The following steps are how to get arround this issue. If you don't have ligands that require cif restraints then you can run \texttt{mmtbx.flipbase} on the unmodified PDB (Step 3).
