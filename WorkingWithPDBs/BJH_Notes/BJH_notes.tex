@@ -135,4 +135,27 @@ There is a tool within cctbx that can do this and is called \textit{mmtbx.flipba
   \item Replace the ATOM records for the purine of interest in 1ORN\_flip.pdb with the ones in 1ORNNOHETS\_flipbase.pdb.
 \end{enumerate}
 
+\section{bb/sc RSCC Kludge}
+This is a kludge to get around the fact that \texttt{phenix.real\_space\_correlation} cannot sepoarate backbone and sidechain yet. This is done by creating two pdbs, one with just the bb and the other just sc. We then run \texttt{phenix.real\_space\_correlation} on the two files. The following is for DNA only. It can be easily modified for protein of RNA by modifying the selection criteria. I will give this as a bash script but each line can be ran on the command line separately.
+
+\vspace{6mm}
+\noindent
+Here it is in a bash script.
+\begin{lstlisting}[language=bash]
+# $1 is the first argument witch is expected to be a PDB file.
+# $2 is the second argument witch is expected to be a SF mtz.
+# Note that PHENIX must be souced to run this script.
+#
+# This script takes a PDB file and creates two files. one with just the DNA BB ("xxxxx_bb.pdb") and the other with the DNA BB removed ("xxxxx_sc.pdb"). Then phenix.real_space_correlation is ran on each file creating xxxxx_bb.rsc and xxxxx_sc.rsc.
+
+echo "Keeping DNA bb"
+phenix.pdbtools modify.keep="(name ' P  ' or name ' OP1' or name ' OP2' or name ' O5\'' or name ' C5\'' or name ' C4\'' or name ' O4\'' or name ' C3\'' or name ' O3\'' or name ' C2\'' or name ' C1\'')" output.file_name="$1_bb.pdb" $1
+
+echo "Removing DNA bb"
+phenix.pdbtools modify.remove="(name ' P  ' or name ' OP1' or name ' OP2' or name ' O5\'' or name ' C5\'' or name ' C4\'' or name ' O4\'' or name ' C3\'' or name ' O3\'' or name ' C2\'' or name ' C1\'')" output.file_name="$1_sc.pdb" $1
+
+echo "Running phenix.real_space_correlation"
+phenix.real_space_correlation detail=residue $1_bb.pdb $2 > $1_bb.rsc
+phenix.real_space_correlation detail=residue $1_sc.pdb $2 > $1_sc.rsc
+\end{lstlisting}
 \end{document}
