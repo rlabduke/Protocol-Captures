@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.6.18)  16 AUG 2016 14:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.6.18)  22 NOV 2016 12:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -153,53 +153,57 @@ source PHENIX
 [7] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2015/06/04 1.6 listings language file
 )
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 278.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 281.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 278.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 281.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 278.
+(Font)              <5> on input line 281.
  [8]
-LaTeX Font Info:    Try loading font information for OML+cmr on input line 328.
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 334.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 328.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 334.
 
-Overfull \hbox (12.14928pt too wide) in paragraph at lines 344--345
+Overfull \hbox (12.14928pt too wide) in paragraph at lines 350--351
 \OT1/cmr/m/n/12 Updating the []\OT1/cmr/bx/n/12 ex-per-i-ment[] \OT1/cmr/m/n/12
  and []\OT1/cmr/bx/n/12 sum-mary[] \OT1/cmr/m/n/12 col-lec-tions in the []\OT1/
 cmr/bx/n/12 pdb[]info[] \OT1/cmr/m/n/12 database
  []
 
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 347.
 [9]
-Overfull \hbox (13.93274pt too wide) in paragraph at lines 375--376
-\OT1/cmr/m/n/12 Unfortunately []\OT1/cmr/bx/n/12 residues[]colkeys[] \OT1/cmr/m
-/n/12 is not straight-for-ward to up-date. Ask Bradley. 
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 353.
+ [10]
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 399.
+ [11]
+Overfull \hbox (0.28087pt too wide) in paragraph at lines 448--448
+[]\OT1/cmr/bx/n/12 Enter the JSON out-put from \OT1/cmtt/m/n/12 run[]mongo[]val
+idation.py \OT1/cmr/bx/n/12 into the Mon-
  []
 
-[10] (./PDB_MongoDB.aux)
+[12] (./PDB_MongoDB.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 2962 strings out of 493029
- 39765 string characters out of 6136234
- 220694 words of memory out of 5000000
- 6514 multiletter control sequences out of 15000+600000
+ 2963 strings out of 493029
+ 39781 string characters out of 6136234
+ 202879 words of memory out of 5000000
+ 6515 multiletter control sequences out of 15000+600000
  9324 words of font info for 33 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 26i,12n,42p,487b,1229s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 26i,12n,42p,570b,1545s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texl
@@ -209,10 +213,10 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist
 type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
 /amsfonts/cm/cmtt12.pfb>
-Output written on PDB_MongoDB.pdf (10 pages, 129788 bytes).
+Output written on PDB_MongoDB.pdf (12 pages, 136827 bytes).
 PDF statistics:
- 73 PDF objects out of 1000 (max. 8388607)
- 51 compressed objects within 1 object stream
+ 79 PDF objects out of 1000 (max. 8388607)
+ 55 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

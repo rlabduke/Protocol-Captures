@@ -378,5 +378,74 @@ To update \mdbcol{summary} simply do:
 
 \subsection{Updating \mdbcol{residues\_colkeys}}
 
-Unfortunately \mdbcol{residues\_colkeys} is not straightforward to update. Ask Bradley.
+There are 3 steps to update \mdbcol{residues\_colkeys}:
+\begin{itemize}
+\item Get pdbs currently in \mdbcol{residues\_colkeys} -- file should be 1 code per line.
+\item Setup and run \texttt{run\_mongo\_validation.py} on the cluster with the two PDB lists.
+\item Enter the JSON output from \texttt{run\_mongo\_validation.py} into the MongoDB. 
+\end{itemize}
+
+\subsubsection*{Get pdbs currently in \mdbcol{residues\_colkeys}}
+In lab\_scripts/mongo\_queries/update\_mongo there is a script called\\ \texttt{get\_list\_of\_pdbs\_in\_collection.py} that does all the work for you. You can specify an output file which is ready to use when running \\ \texttt{run\_mongo\_validation.py}. NOTE: when running this, using the '.l' extention will prevent an accidental commit to git as '*.l' is in .gitignore. Also, the name should be residues\_colkeys\_pdbs.l as scripts in later steps will expect this name.
+
+\vspace{5mm}
+\noindent
+\texttt{\$ python get\_list\_of\_pdbs\_in\_collection.py residues\_colkeys\\-o residues\_colkeys\_pdbs.l}
+
+\vspace{5mm}
+\noindent
+\texttt{get\_list\_of\_pdbs\_in\_collection.py} is intended to get a list of missing PDBs from any collection in \mdbdb{pdb\_info} but functionality for collections other than \mdbcol{residues\_colkeys} may not be programmed yet.
+
+\subsubsection*{Setup and run \texttt{run\_mongo\_validation.py} on the cluster}
+This is by far the most complicated part of the process. This gets all validation data for each residue in each PDB. The script that does this is in PDB\_mongodb, a RLab GitHub repository. The script that sets up the environment to run the PDB\_mongodb rutine is in lab\_scripts, a seperate RLab GitHub repository. In the previous step you created residues\_colkeys\_pdbs.l that has the PDB codes in \mdbcol{residues\_colkeys}. Now that we have that we are ready for the next step.
+
+\vspace{5mm}
+\noindent
+Copy over residues\_colkeys\_pdbs.l to an unmodified\\lab\_scripts/mongo\_queries/update\_mongo/cluster\_scripts.  
+
+\vspace{2mm}
+\noindent
+\texttt{\$ cp residues\_colkeys\_pdbs.l cluster\_scripts/}
+
+\vspace{5mm}
+\noindent
+Copy over this cluster\_scripts directory to LBL.  
+
+\vspace{2mm}
+\noindent
+\texttt{\$ rsync -av cluster\_scripts/ lbl.domain:/my/path/run\_20161122}
+
+\vspace{5mm}
+\noindent
+ssh to LBL, go to /my/path/run\_20161122 and run setup.
+
+\vspace{2mm}
+\noindent
+\texttt{\$ cd /my/path/run\_20161122}
+
+\noindent
+\texttt{\$ ./setup.sh}
+
+\vspace{5mm}
+\noindent
+The setup script creates the requsite directories for qsub and gets a list of needed PDBs by enumerating through the structure factors directory in the PDB mirror on the LBL cluster and eliminating pdbs already in the DB (i.e. PDBs in residues\_colkeys\_pdbs.l). This writes a file called pdbs\_to\_be\_done.l used by the qsub scripts that run \texttt{run\_mongo\_validation.py}. At the end of running, the setup script tells you the number of pdbs in pdbs\_to\_be\_done.l and the command to issue to submit your job to the que. e.g.
+
+\vspace{2mm}
+\noindent
+\texttt{\$ qsub -t 1-N qsub.sh}
+
+\vspace{2mm}
+\noindent
+where N is the number of pdbs in pdbs\_to\_be\_done.l. YOU NEED TO BE ON CHEVY TO DO THIS!
+
+\vspace{10mm}
+\noindent
+Useful qsub commands:
+\begin{itemize}
+  \item \texttt{libtbx.sge\_qstat\_counts} -- see jobs and who is running the.
+  \item \texttt{libtbx.sge\_available\_slots} -- guess what this does.
+\end{itemize}
+\subsubsection*{Enter the JSON output from \texttt{run\_mongo\_validation.py} into the MongoDB}
+
+
 \end{document}
