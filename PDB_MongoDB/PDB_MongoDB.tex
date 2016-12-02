@@ -445,7 +445,23 @@ Useful qsub commands:
   \item \texttt{libtbx.sge\_qstat\_counts} -- see jobs and who is running the.
   \item \texttt{libtbx.sge\_available\_slots} -- guess what this does.
 \end{itemize}
-\subsubsection*{Enter the JSON output from \texttt{run\_mongo\_validation.py} into the MongoDB}
+\subsubsection*{Insert the JSON output from \texttt{run\_mongo\_validation.py} into the MongoDB}
 
+Inserting JSON documents into MongoDB is super easy, it just takes a very long command. Before that though, you'll need to get the data from the LBL cluster. When we ran \texttt{run\_mongo\_validation.py} at LBL we created a directory called \texttt{val\_out} -- this is where ther data was output. We need to copy \texttt{val\_out} to your local machine:
 
+\vspace{2mm}
+\noindent
+\texttt{\$ rsync -av lbl.domain:/my/path/run\_20161122/val\_out .}
+
+\vspace{5mm}
+\noindent
+Now that we have the data, we can now insert the data into the MongoDB. Ensure you have established the ssh tunnel and then run:
+
+\vspace{2mm}
+\noindent
+\texttt{\$ find val\_out/ -name "*.validate" -exec mongoimport --db pdb\_info --collection residues\_colkeys  --file '\{\}' --username bhintze --password youknow --authenticationDatabase test $\backslash$;}
+
+\vspace{5mm}
+\noindent
+Of course, you'll need to replace 'youknow' with the actual password.
 \end{document}

@@ -1,2 +1,5 @@
 *.synctex.gz
 *.tex.bak
+*.log
+*.aux
+*.toc
